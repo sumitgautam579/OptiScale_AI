@@ -7,7 +7,9 @@ A turnkey FinOps solution that ingests AWS billing data, applies ML-driven right
 
 A mid-sized SaaS company struggling with unpredictable AWS bills integrates OptiScale_AI to automatically ingest daily billing data, generate ML-driven rightsizing recommendations for EC2 and RDS, and apply approved Terraform changes via Ansible. Within the first month, they may reduce their cloud spend upto by 25% and gain continuous visibility into cost anomalies through Grafana dashboards.
 
+## 🏗️ Architecture
 
+[OptiScale_AI Architecture Diagram](doc/OptiScale_AI_ARCH.png)
 ---
 
 ## ✨ Highlights
@@ -70,11 +72,13 @@ optiscale-ai/                    # Project root
 
 
 2. **Clone the repository**
+```
+    git clone https://github.com/sumitgautam579/OptiScale_AI.git
 
-git clone https://github.com/sumitgautam579/OptiScale_AI.git
-
+    cd optiscale-ai
+```
 ```bash
-cd optiscale-ai
+
 
 # 1. Configure AWS credentials
 export AWS_ACCESS_KEY_ID=...
@@ -116,4 +120,5 @@ Contributions welcome! Open issues or PRs to add new features, improve docs, or 
 ## 📄 License
 
 © 2025 **OptiScale_AI** DEMO / **Sumit_Gautam_Devops_Engineer**
+
 Licensed under the MIT License. See `LICENSE` for details.
