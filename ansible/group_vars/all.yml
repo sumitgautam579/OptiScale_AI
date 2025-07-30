@@ -1,0 +1,7 @@
+aws_region: ap-south-1
+eks_cluster_name: optiscale-cluster
+eks_subnet_ids: []          # fill with your private subnet IDs
+eks_role_arn: ''            # fill with your EKS service-role ARN
+db_password: ChangeMe123!
+s3_bucket_name: cost-optimizer-billing
+key_name: your-ssh-key

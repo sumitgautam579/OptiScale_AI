@@ -1,0 +1,16 @@
+- name: Install Grafana container
+  community.docker.docker_container:
+    name: grafana
+    image: grafana/grafana:latest
+    state: started
+    restart_policy: always
+
+- name: Copy provisioning files
+  copy:
+    src: '{{ playbook_dir }}/../../grafana/provisioning/'
+    dest: /etc/grafana/provisioning/
+
+- name: Copy dashboards
+  copy:
+    src: '{{ playbook_dir }}/../../grafana/dashboards/'
+    dest: /var/lib/grafana/dashboards/

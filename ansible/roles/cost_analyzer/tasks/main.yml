@@ -1,0 +1,29 @@
+- name: Build cost-analyzer Docker image
+  community.docker.docker_image:
+    name: cost-analyzer
+    build:
+      path: '{{ playbook_dir }}/../../docker'
+
+- name: Push image to ECR (requires AWS CLI login)
+  community.aws.ecr:
+    repository: optiscale
+    state: present
+  register: ecr
+
+- name: Tag & push to ECR
+  shell: |
+    $(aws ecr get-login --no-include-email --region {{ aws_region }})
+    docker tag cost-analyzer:latest ${ecr.repository_uri}:latest
+    docker push ${ecr.repository_uri}:latest
+
+- name: Prepare Helm values
+  copy:
+    dest: helm/optiscale-chart/values.yaml
+    content: |
+      image:
+        repository: {{ ecr.repository_uri }}
+        tag: latest
+      schedule: "0 */6 * * *"
+      aws:
+        region: {{ aws_region }}
+        bucket: {{ s3_bucket_name }}

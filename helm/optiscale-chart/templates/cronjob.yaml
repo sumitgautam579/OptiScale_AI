@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: optiscale-analyzer
+spec:
+  schedule: "{{ .Values.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: default
+          containers:
+            - name: analyzer
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              env:
+                - name: AWS_REGION
+                  value: "{{ .Values.aws.region }}"
+                - name: S3_BUCKET
+                  value: "{{ .Values.aws.bucket }}"
+          restartPolicy: OnFailure

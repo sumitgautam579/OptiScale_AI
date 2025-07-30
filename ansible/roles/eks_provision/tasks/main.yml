@@ -1,0 +1,13 @@
+- name: Create EKS cluster
+  community.aws.eks_cluster:
+    name: '{{ eks_cluster_name }}'
+    version: '1.24'
+    role_arn: '{{ eks_role_arn }}'
+    resources_vpc_config:
+      subnetIds: '{{ eks_subnet_ids }}'
+    state: present
+
+- name: Update kubeconfig
+  community.kubernetes.k8s_auth:
+    kubeconfig: ~/.kube/config
+    context: '{{ eks_cluster_name }}'

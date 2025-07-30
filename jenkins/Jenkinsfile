@@ -1,0 +1,27 @@
+pipeline {
+  agent any
+  environment {
+    AWS_REGION = 'ap-south-1'
+    CLUSTER    = 'optiscale-cluster'
+  }
+  stages {
+    stage('Checkout') { steps { checkout scm } }
+    stage('Lint Ansible') { steps { sh 'ansible-lint ansible/' } }
+    stage('Provision Infra') {
+      steps { sh 'ansible-playbook ansible/playbooks/provision.yml -i ansible/inventory/aws_ec2.yml' }
+    }
+    stage('Build & Push') {
+      steps { sh 'ansible-playbook ansible/playbooks/deploy.yml -i ansible/inventory/aws_ec2.yml' }
+    }
+    stage('Helm Deploy') {
+      steps { sh 'helm upgrade --install optiscale helm/optiscale-chart --namespace optiscale --create-namespace' }
+    }
+    stage('Grafana Provision') {
+      steps { sh 'ansible-playbook ansible/playbooks/grafana.yml -i ansible/inventory/aws_ec2.yml' }
+    }
+  }
+  post {
+    success { echo '🚀 OptiScale AI deployed on EKS!' }
+    failure { mail to: 'sumitgautam579@gmail.com', subject: 'Deployment Failed', body: currentBuild.fullDisplayName }
+  }
+}

@@ -1,0 +1,17 @@
+- name: Create S3 bucket for billing data
+  community.aws.s3_bucket:
+    name: '{{ s3_bucket_name }}'
+    region: '{{ aws_region }}'
+    state: present
+
+- name: Provision RDS MySQL instance
+  community.aws.rds_instance:
+    identifier: costoptimizer-db
+    engine: mysql
+    engine_version: '8.0'
+    instance_type: db.t2.micro
+    username: admin
+    password: '{{ db_password }}'
+    allocated_storage: 20
+    state: present
+    wait: yes

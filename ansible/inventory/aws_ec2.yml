@@ -1,0 +1,10 @@
+plugin: aws_ec2
+regions:
+  - '{{ aws_region }}'
+filters:
+  tag:Role: cost-analyzer
+hostnames:
+  - public-ip-address
+keyed_groups:
+  - key: tags.Role
+    prefix: ''
