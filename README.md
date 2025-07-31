@@ -121,4 +121,4 @@ Contributions welcome! Open issues or PRs to add new features, improve docs, or 
 
 © 2025 **OptiScale_AI** DEMO / **Sumit_Gautam_Devops_Engineer**
 
-Licensed under the MIT License. See `LICENSE` for details.
+Licensed under the LGPL-2.1 License. See `LICENSE` for details.
